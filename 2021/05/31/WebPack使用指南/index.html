@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"banshan-alec.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="webpack使用指南 模块化开发  方便代码重用，提升开发效率，方便后期维护   统一模块化规范——ES6模块化  每个JS文件都是一个独立的模块  导入模块用import关键字  import mod1, {a, b, c as 333, show} from ‘.&#x2F;mod1.js’   暴露模块用export关键字(export default每个js文件，只能一个)  export def">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebPack使用指南">
+<meta property="og:url" content="https://banshan-alec.github.io/2021/05/31/WebPack%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
+<meta property="og:site_name" content="BanShan&#39;s Blog">
+<meta property="og:description" content="webpack使用指南 模块化开发  方便代码重用，提升开发效率，方便后期维护   统一模块化规范——ES6模块化  每个JS文件都是一个独立的模块  导入模块用import关键字  import mod1, {a, b, c as 333, show} from ‘.&#x2F;mod1.js’   暴露模块用export关键字(export default每个js文件，只能一个)  export def">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-30T17:15:19.339Z">
+<meta property="article:modified_time" content="2021-05-30T17:17:28.785Z">
+<meta property="article:author" content="半山Alec">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://banshan-alec.github.io/2021/05/31/WebPack%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>WebPack使用指南 | BanShan's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BanShan's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">欢迎来到半山Alec的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://banshan-alec.github.io/2021/05/31/WebPack%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="半山Alec">
+      <meta itemprop="description" content="这里会存放一些我平常学习的笔记，疑惑与解决的方案">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BanShan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WebPack使用指南
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-31 01:15:19 / 修改时间：01:17:28" itemprop="dateCreated datePublished" datetime="2021-05-31T01:15:19+08:00">2021-05-31</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="webpack使用指南"><a href="#webpack使用指南" class="headerlink" title="webpack使用指南"></a>webpack使用指南</h3><ul>
+<li><p>模块化开发</p>
+<blockquote>
+<p>方便代码重用，提升开发效率，方便后期维护</p>
+</blockquote>
+</li>
+<li><p>统一模块化规范——ES6模块化</p>
+<ul>
+<li><p>每个JS文件都是一个独立的模块</p>
+</li>
+<li><p>导入模块用<strong>import</strong>关键字</p>
+<blockquote>
+<p>import mod1, {a, b, c as 333, show} from ‘./mod1.js’</p>
+</blockquote>
+</li>
+<li><p>暴露模块用<strong>export</strong>关键字(export default每个js文件，只能一个)</p>
+<blockquote>
+<p>export default{a, b, show}</p>
+<p>export let c = ‘ccc’</p>
+<p>export let d = ‘ddd’</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Node.js中使用ES6模块化</p>
+<ol>
+<li>npx init (“生成package.json)</li>
+<li>package.json添加”type“: “modole”</li>
+<li>npx index.js</li>
+</ol>
+</li>
+<li><p>webpack概述</p>
+<blockquote>
+<p>webpack 提供了友好的模块化支持，以及代码压缩混淆、处理 js 兼容问题、性能优化等强大的功能</p>
+</blockquote>
+</li>
+<li><p>在项目中安装和配置 webpack</p>
+<ol>
+<li>运行 <strong>npm install webpack webpack-cli –D</strong> 命令，安装 webpack 相关的包</li>
+<li>在项目根目录中，创建名为 webpack.config.js 的 webpack 配置文件</li>
+<li>修改 webpack.config.js 的mode为 ‘development’（不过分压缩js）</li>
+<li>修改 package.json 的 script 为 “dev”: “webpack”</li>
+<li>npm run dev</li>
+</ol>
+</li>
+<li><p>配置打包的入口与出口</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>) <span class="comment">// 导入 node.js 中专门操作路径的模块</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line"> <span class="attr">entry</span>: path.join(__dirname, <span class="string">&#x27;./src/index.js&#x27;</span>), <span class="comment">// 打包入口文件的路径</span></span><br><span class="line"> <span class="attr">output</span>: &#123;</span><br><span class="line"> <span class="attr">path</span>: path.join(__dirname, <span class="string">&#x27;./dist&#x27;</span>), <span class="comment">// 输出文件的存放路径</span></span><br><span class="line"> <span class="attr">filename</span>: <span class="string">&#x27;bundle.js&#x27;</span> <span class="comment">// 输出文件的名称</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>webpack 的自动打包功能</p>
+<ol>
+<li><p>运行 <strong>npm install webpack-dev-server –D</strong> 命令，安装支持项目自动打包的工具</p>
+</li>
+<li><p>修改 package.json 的 script 为 “dev”: “webpack-dev-server”</p>
+</li>
+<li><p>修改 index.html 的 script 为  src=”/bundle.js”</p>
+</li>
+<li><p>npm run dev</p>
+</li>
+<li><p>浏览器中访问 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> 地址</p>
+</li>
+<li><p>修改package.json 的 script ，添加相关配置</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line"> <span class="string">&quot;dev&quot;</span>: <span class="string">&quot;webpack-dev-server --open --host 127.0.0.1 --port 8888&quot;</span></span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>html-webpack-plugin 生成 index.html 指引页面</p>
+<ol>
+<li><p>运行 <strong>npm install html-webpack-plugin –D</strong> 命令，安装生成预览页面的插件</p>
+</li>
+<li><p>修改 webpack.config.js 文件头部区域，添加如下配置信息：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入生成预览页面的插件，得到一个构造函数</span></span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">&#x27;html-webpack-plugin&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> htmlPlugin = <span class="keyword">new</span> HtmlWebpackPlugin(&#123; <span class="comment">// 创建插件的实例对象</span></span><br><span class="line"> <span class="attr">template</span>: <span class="string">&#x27;./src/index.html&#x27;</span>, <span class="comment">// 指定要用到的模板文件</span></span><br><span class="line"> <span class="attr">filename</span>: <span class="string">&#x27;index.html&#x27;</span> <span class="comment">// 指定生成的文件的名称，该文件存在于内存中，在目录中不显示</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>修改 webpack.config.js 文件中向外暴露的配置对象，新增如下配置节点：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports: &#123;</span><br><span class="line">	<span class="attr">plugins</span>: [ htmlPlugin ] <span class="comment">// plugins 数组是 webpack 打包期间会用到的一些插件列表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>webpack 各种加载器loader</p>
+<blockquote>
+<p> 在实际开发过程中，webpack 默认只能打包处理以 .js 后缀名结尾的模块，（而且只支持部分ES6代码）</p>
+</blockquote>
+<blockquote>
+<p>其他的模块，webpack 默认处理不了，需要调用 loader 加载器才可以正常打包，否则会报错！</p>
+</blockquote>
+</li>
+<li><p>style-loader css-loader</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rules: [</span><br><span class="line"> 	&#123; <span class="attr">test</span>: <span class="regexp">/\.css$/</span>, use: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>] &#125;</span><br><span class="line"> ]</span><br></pre></td></tr></table></figure></li>
+<li><p>less-loader less</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rules: [</span><br><span class="line"> 	&#123; <span class="attr">test</span>: <span class="regexp">/\.less$/</span>, use: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>, <span class="string">&#x27;less-loader&#x27;</span>] &#125;</span><br><span class="line"> ]</span><br></pre></td></tr></table></figure></li>
+<li><p>url-loader file-loader</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rules: [</span><br><span class="line"> 	&#123; <span class="attr">test</span>: <span class="regexp">/\.jpg|png|gif|bmp|ttf|eot|svg|woff|woff2$/</span>, use: <span class="string">&#x27;url-loader?limit=16940&#x27;</span>&#125;</span><br><span class="line"> ]</span><br><span class="line"></span><br><span class="line"><span class="comment">//? 之后的是 loader 的参数项</span></span><br><span class="line"><span class="comment">//只有小于 limit 大小(单位是字节byte)的图片，才会被转为 base64 图片</span></span><br></pre></td></tr></table></figure></li>
+<li><p>postcss-loader 自动添加 css 的兼容前缀</p>
+<ol>
+<li><p>npm i postcss-loader autoprefixer -D</p>
+</li>
+<li><p>创建 postcss.config.js，并初始化</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">&#x27;autoprefixer&#x27;</span>) <span class="comment">// 导入自动添加前缀的插件</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	<span class="attr">plugins</span>: [ autoprefixer ] <span class="comment">// 挂载插件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改 webpack.config.js , 添加rules</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    <span class="attr">rules</span>: [</span><br><span class="line">        &#123; <span class="attr">test</span>:<span class="regexp">/\.css$/</span>, use: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>, <span class="string">&#x27;postcss-			loader&#x27;</span>] &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>babel-loader 处理 js 文件中的高级语法</p>
+<ol>
+<li><p>npm i babel-loader babel-core babel-preset-env -D  </p>
+</li>
+<li><p>npm i @babel/plugin-proposal-class-properties</p>
+</li>
+<li><p>npm i @babel/plugin-syntax-class-properties</p>
+</li>
+<li><p>创建 balbel.config.js ，并初始化</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">presets</span>: [ <span class="string">&#x27;env&#x27;</span> ],</span><br><span class="line">    <span class="attr">plugins</span>: [ <span class="string">&#x27;@babel/plugin-transform-runtime&#x27;</span>, <span class="string">&#x27;@babel/plugin-			proposalclass-properties’ ]</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">        </span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改 webpack.config.js , 添加rules</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">module</span>: &#123;</span><br><span class="line">     <span class="attr">rules</span>: [</span><br><span class="line"><span class="comment">// exclude 为排除项，表示 babel-loader 不需要处理 node_modules 中的 js 文件</span></span><br><span class="line"> 		&#123; <span class="attr">test</span>: <span class="regexp">/\.js$/</span>, use: <span class="string">&#x27;babel-loader&#x27;</span>, <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span> &#125;</span><br><span class="line">     ]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>webpack 项目中引入 vue单文件</p>
+<ol>
+<li><p>运行 <strong>npm i vue-loader vue-template-compiler -D</strong> 命令</p>
+</li>
+<li><p>修改 webpack.config.js , 添加插件plugins</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> VueLoaderPlugin = <span class="built_in">require</span>(<span class="string">&#x27;vue-loader/lib/plugin&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">     <span class="attr">module</span>: &#123;</span><br><span class="line">     <span class="attr">rules</span>: [</span><br><span class="line">     <span class="comment">// ... 其它规则</span></span><br><span class="line">     &#123; <span class="attr">test</span>: <span class="regexp">/\.vue$/</span>, loader: <span class="string">&#x27;vue-loader&#x27;</span> &#125;</span><br><span class="line">     ]</span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="attr">plugins</span>: [</span><br><span class="line">     <span class="comment">// ... 其它插件</span></span><br><span class="line">     <span class="keyword">new</span> VueLoaderPlugin() <span class="comment">// 请确保引入这个插件！</span></span><br><span class="line">     ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>运行 <strong>npm i vue –S</strong> 安装 vue</p>
+</li>
+<li><p>修改 index.js ，通过 <strong>import Vue from ‘vue’</strong> 来导入 vue 构造函数</p>
+</li>
+<li><p>通过 <strong>import App from ‘./component/app.vue’</strong> 再导入App.vue 文件</p>
+</li>
+<li><p>创建 vue 的实例对象，并指定要控制的 el 区域，再通过 render 函数渲染 App 根组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 导入 Vue 构造函数</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// 2. 导入 App 根组件</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./components/App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">     <span class="comment">// 3. 指定 vm 实例要控制的页面区域</span></span><br><span class="line">     <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">     <span class="comment">// 4. 通过 render 函数，把指定的组件渲染到 el 区域中</span></span><br><span class="line">     <span class="comment">// 5. render 函数 会把 el 指定的容器中的内容，全部清空覆盖！</span></span><br><span class="line">     <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params">createVue</span>)</span>&#123;</span><br><span class="line">         <span class="keyword">return</span> createVue(App);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/31/VUE%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" rel="prev" title="VUE基础使用">
+      <i class="fa fa-chevron-left"></i> VUE基础使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/31/VUE%E9%AB%98%E7%BA%A7%E4%BD%BF%E7%94%A8/" rel="next" title="VUE高级使用">
+      VUE高级使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">webpack使用指南</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="半山Alec"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">半山Alec</p>
+  <div class="site-description" itemprop="description">这里会存放一些我平常学习的笔记，疑惑与解决的方案</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BanShan-Alec" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BanShan-Alec" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wengzehua@88.com" title="E-Mail → mailto:wengzehua@88.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">半山Alec</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
