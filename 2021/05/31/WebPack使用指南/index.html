@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -17,21 +15,21 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"banshan-alec.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"banshan-alec.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="webpack使用指南 模块化开发  方便代码重用，提升开发效率，方便后期维护   统一模块化规范——ES6模块化  每个JS文件都是一个独立的模块  导入模块用import关键字  import mod1, {a, b, c as 333, show} from ‘.&#x2F;mod1.js’   暴露模块用export关键字(export default每个js文件，只能一个)  export def">
+  <meta name="description" content="webpack使用指南 模块化开发  方便代码重用，提升开发效率，方便后期维护   统一模块化规范——ES6模块化  每个JS文件都是一个独立的模块  导入模块用import关键字">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WebPack使用指南">
 <meta property="og:url" content="https://banshan-alec.github.io/2021/05/31/WebPack%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
 <meta property="og:site_name" content="BanShan&#39;s Blog">
-<meta property="og:description" content="webpack使用指南 模块化开发  方便代码重用，提升开发效率，方便后期维护   统一模块化规范——ES6模块化  每个JS文件都是一个独立的模块  导入模块用import关键字  import mod1, {a, b, c as 333, show} from ‘.&#x2F;mod1.js’   暴露模块用export关键字(export default每个js文件，只能一个)  export def">
+<meta property="og:description" content="webpack使用指南 模块化开发  方便代码重用，提升开发效率，方便后期维护   统一模块化规范——ES6模块化  每个JS文件都是一个独立的模块  导入模块用import关键字">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-30T17:15:19.339Z">
-<meta property="article:modified_time" content="2021-05-31T09:57:44.834Z">
+<meta property="article:modified_time" content="2021-05-31T12:54:00.858Z">
 <meta property="article:author" content="半山Alec">
-<meta property="article:tag" content="指南">
 <meta property="article:tag" content="Webpack">
+<meta property="article:tag" content="指南">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://banshan-alec.github.io/2021/05/31/WebPack%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">
@@ -106,6 +104,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -140,11 +139,38 @@
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -192,7 +218,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-05-31 01:15:19 / 修改时间：17:57:44" itemprop="dateCreated datePublished" datetime="2021-05-31T01:15:19+08:00">2021-05-31</time>
+              <time title="创建时间：2021-05-31 01:15:19 / 修改时间：20:54:00" itemprop="dateCreated datePublished" datetime="2021-05-31T01:15:19+08:00">2021-05-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +230,21 @@
                 </span>
             </span>
 
-          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
 
         </div>
       </header>
@@ -226,6 +266,8 @@
 <li><p>每个JS文件都是一个独立的模块</p>
 </li>
 <li><p>导入模块用<strong>import</strong>关键字</p>
+<span id="more"></span>
+
 <blockquote>
 <p>import mod1, {a, b, c as 333, show} from ‘./mod1.js’</p>
 </blockquote>
@@ -261,7 +303,14 @@
 </ol>
 </li>
 <li><p>配置打包的入口与出口</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>) <span class="comment">// 导入 node.js 中专门操作路径的模块</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line"> <span class="attr">entry</span>: path.join(__dirname, <span class="string">&#x27;./src/index.js&#x27;</span>), <span class="comment">// 打包入口文件的路径</span></span><br><span class="line"> <span class="attr">output</span>: &#123;</span><br><span class="line"> <span class="attr">path</span>: path.join(__dirname, <span class="string">&#x27;./dist&#x27;</span>), <span class="comment">// 输出文件的存放路径</span></span><br><span class="line"> <span class="attr">filename</span>: <span class="string">&#x27;bundle.js&#x27;</span> <span class="comment">// 输出文件的名称</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+  <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span> <span class="token comment">// 导入 node.js 中专门操作路径的模块</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+ entry<span class="token operator">:</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'./src/index.js'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 打包入口文件的路径</span>
+ output<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+ path<span class="token operator">:</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'./dist'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 输出文件的存放路径</span>
+ filename<span class="token operator">:</span> <span class="token string">'bundle.js'</span> <span class="token comment">// 输出文件的名称</span>
+ <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>webpack 的自动打包功能</p>
 <ol>
 <li><p>运行 <strong>npm install webpack-dev-server –D</strong> 命令，安装支持项目自动打包的工具</p>
@@ -275,7 +324,9 @@
 <li><p>浏览器中访问 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> 地址</p>
 </li>
 <li><p>修改package.json 的 script ，添加相关配置</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line"> <span class="string">&quot;dev&quot;</span>: <span class="string">&quot;webpack-dev-server --open --host 127.0.0.1 --port 8888&quot;</span></span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure></li>
+ <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token string">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+ <span class="token string">"dev"</span><span class="token operator">:</span> <span class="token string">"webpack-dev-server --open --host 127.0.0.1 --port 8888"</span>
+ <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 </ol>
 </li>
 <li><p>html-webpack-plugin 生成 index.html 指引页面</p>
@@ -283,9 +334,16 @@
 <li><p>运行 <strong>npm install html-webpack-plugin –D</strong> 命令，安装生成预览页面的插件</p>
 </li>
 <li><p>修改 webpack.config.js 文件头部区域，添加如下配置信息：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入生成预览页面的插件，得到一个构造函数</span></span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">&#x27;html-webpack-plugin&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> htmlPlugin = <span class="keyword">new</span> HtmlWebpackPlugin(&#123; <span class="comment">// 创建插件的实例对象</span></span><br><span class="line"> <span class="attr">template</span>: <span class="string">&#x27;./src/index.html&#x27;</span>, <span class="comment">// 指定要用到的模板文件</span></span><br><span class="line"> <span class="attr">filename</span>: <span class="string">&#x27;index.html&#x27;</span> <span class="comment">// 指定生成的文件的名称，该文件存在于内存中，在目录中不显示</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+ <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 导入生成预览页面的插件，得到一个构造函数</span>
+<span class="token keyword">const</span> HtmlWebpackPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'html-webpack-plugin'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> htmlPlugin <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HtmlWebpackPlugin</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token comment">// 创建插件的实例对象</span>
+ template<span class="token operator">:</span> <span class="token string">'./src/index.html'</span><span class="token punctuation">,</span> <span class="token comment">// 指定要用到的模板文件</span>
+ filename<span class="token operator">:</span> <span class="token string">'index.html'</span> <span class="token comment">// 指定生成的文件的名称，该文件存在于内存中，在目录中不显示</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>修改 webpack.config.js 文件中向外暴露的配置对象，新增如下配置节点：</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports: &#123;</span><br><span class="line">	<span class="attr">plugins</span>: [ htmlPlugin ] <span class="comment">// plugins 数组是 webpack 打包期间会用到的一些插件列表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <pre class="line-numbers language-js" data-language="js"><code class="language-js">module<span class="token punctuation">.</span>exports<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+	plugins<span class="token operator">:</span> <span class="token punctuation">[</span> htmlPlugin <span class="token punctuation">]</span> <span class="token comment">// plugins 数组是 webpack 打包期间会用到的一些插件列表</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 </ol>
 </li>
 <li><p>webpack 各种加载器loader</p>
@@ -297,19 +355,35 @@
 </blockquote>
 </li>
 <li><p>style-loader css-loader</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rules: [</span><br><span class="line"> 	&#123; <span class="attr">test</span>: <span class="regexp">/\.css$/</span>, use: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>] &#125;</span><br><span class="line"> ]</span><br></pre></td></tr></table></figure></li>
+  <pre class="line-numbers language-js" data-language="js"><code class="language-js">rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+ 	<span class="token punctuation">&#123;</span> test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.css$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span> use<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'style-loader'</span><span class="token punctuation">,</span> <span class="token string">'css-loader'</span><span class="token punctuation">]</span> <span class="token punctuation">&#125;</span>
+ <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 <li><p>less-loader less</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rules: [</span><br><span class="line"> 	&#123; <span class="attr">test</span>: <span class="regexp">/\.less$/</span>, use: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>, <span class="string">&#x27;less-loader&#x27;</span>] &#125;</span><br><span class="line"> ]</span><br></pre></td></tr></table></figure></li>
+  <pre class="line-numbers language-js" data-language="js"><code class="language-js">rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+ 	<span class="token punctuation">&#123;</span> test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.less$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span> use<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'style-loader'</span><span class="token punctuation">,</span> <span class="token string">'css-loader'</span><span class="token punctuation">,</span> <span class="token string">'less-loader'</span><span class="token punctuation">]</span> <span class="token punctuation">&#125;</span>
+ <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 <li><p>url-loader file-loader</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rules: [</span><br><span class="line"> 	&#123; <span class="attr">test</span>: <span class="regexp">/\.jpg|png|gif|bmp|ttf|eot|svg|woff|woff2$/</span>, use: <span class="string">&#x27;url-loader?limit=16940&#x27;</span>&#125;</span><br><span class="line"> ]</span><br><span class="line"></span><br><span class="line"><span class="comment">//? 之后的是 loader 的参数项</span></span><br><span class="line"><span class="comment">//只有小于 limit 大小(单位是字节byte)的图片，才会被转为 base64 图片</span></span><br></pre></td></tr></table></figure></li>
+  <pre class="line-numbers language-js" data-language="js"><code class="language-js">rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+ 	<span class="token punctuation">&#123;</span> test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.jpg|png|gif|bmp|ttf|eot|svg|woff|woff2$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span> use<span class="token operator">:</span> <span class="token string">'url-loader?limit=16940'</span><span class="token punctuation">&#125;</span>
+ <span class="token punctuation">]</span>
+
+<span class="token comment">//? 之后的是 loader 的参数项</span>
+<span class="token comment">//只有小于 limit 大小(单位是字节byte)的图片，才会被转为 base64 图片</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>postcss-loader 自动添加 css 的兼容前缀</p>
 <ol>
 <li><p>npm i postcss-loader autoprefixer -D</p>
 </li>
 <li><p>创建 postcss.config.js，并初始化</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">&#x27;autoprefixer&#x27;</span>) <span class="comment">// 导入自动添加前缀的插件</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	<span class="attr">plugins</span>: [ autoprefixer ] <span class="comment">// 挂载插件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> autoprefixer <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'autoprefixer'</span><span class="token punctuation">)</span> <span class="token comment">// 导入自动添加前缀的插件</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+	plugins<span class="token operator">:</span> <span class="token punctuation">[</span> autoprefixer <span class="token punctuation">]</span> <span class="token comment">// 挂载插件</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>修改 webpack.config.js , 添加rules</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    <span class="attr">rules</span>: [</span><br><span class="line">        &#123; <span class="attr">test</span>:<span class="regexp">/\.css$/</span>, use: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>, <span class="string">&#x27;postcss-			loader&#x27;</span>] &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <pre class="line-numbers language-js" data-language="js"><code class="language-js">module<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span> test<span class="token operator">:</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.css$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span> use<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'style-loader'</span><span class="token punctuation">,</span> <span class="token string">'css-loader'</span><span class="token punctuation">,</span> <span class="token string">'postcss-			loader'</span><span class="token punctuation">]</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
 </li>
 <li><p>babel-loader 处理 js 文件中的高级语法</p>
@@ -321,9 +395,18 @@
 <li><p>npm i @babel/plugin-syntax-class-properties</p>
 </li>
 <li><p>创建 balbel.config.js ，并初始化</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">presets</span>: [ <span class="string">&#x27;env&#x27;</span> ],</span><br><span class="line">    <span class="attr">plugins</span>: [ <span class="string">&#x27;@babel/plugin-transform-runtime&#x27;</span>, <span class="string">&#x27;@babel/plugin-			proposalclass-properties’ ]</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">        </span></span><br></pre></td></tr></table></figure></li>
+ <pre class="line-numbers language-js" data-language="js"><code class="language-js">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    presets<span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">'env'</span> <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    plugins<span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">'@babel/plugin-transform-runtime'</span><span class="token punctuation">,</span> '@babel<span class="token operator">/</span>plugin<span class="token operator">-</span>			proposalclass<span class="token operator">-</span>properties’ <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>
+        <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>修改 webpack.config.js , 添加rules</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">module</span>: &#123;</span><br><span class="line">     <span class="attr">rules</span>: [</span><br><span class="line"><span class="comment">// exclude 为排除项，表示 babel-loader 不需要处理 node_modules 中的 js 文件</span></span><br><span class="line"> 		&#123; <span class="attr">test</span>: <span class="regexp">/\.js$/</span>, use: <span class="string">&#x27;babel-loader&#x27;</span>, <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span> &#125;</span><br><span class="line">     ]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+ <pre class="line-numbers language-js" data-language="js"><code class="language-js"> module<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+     rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+<span class="token comment">// exclude 为排除项，表示 babel-loader 不需要处理 node_modules 中的 js 文件</span>
+ 		<span class="token punctuation">&#123;</span> test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.js$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span> use<span class="token operator">:</span> <span class="token string">'babel-loader'</span><span class="token punctuation">,</span> exclude<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">node_modules</span><span class="token regex-delimiter">/</span></span> <span class="token punctuation">&#125;</span>
+     <span class="token punctuation">]</span>
+ <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
 </li>
 <li><p>webpack 项目中引入 vue单文件</p>
@@ -331,7 +414,19 @@
 <li><p>运行 <strong>npm i vue-loader vue-template-compiler -D</strong> 命令</p>
 </li>
 <li><p>修改 webpack.config.js , 添加插件plugins</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> VueLoaderPlugin = <span class="built_in">require</span>(<span class="string">&#x27;vue-loader/lib/plugin&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">     <span class="attr">module</span>: &#123;</span><br><span class="line">     <span class="attr">rules</span>: [</span><br><span class="line">     <span class="comment">// ... 其它规则</span></span><br><span class="line">     &#123; <span class="attr">test</span>: <span class="regexp">/\.vue$/</span>, loader: <span class="string">&#x27;vue-loader&#x27;</span> &#125;</span><br><span class="line">     ]</span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="attr">plugins</span>: [</span><br><span class="line">     <span class="comment">// ... 其它插件</span></span><br><span class="line">     <span class="keyword">new</span> VueLoaderPlugin() <span class="comment">// 请确保引入这个插件！</span></span><br><span class="line">     ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> VueLoaderPlugin <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'vue-loader/lib/plugin'</span><span class="token punctuation">)</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+     module<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+     rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+     <span class="token comment">// ... 其它规则</span>
+     <span class="token punctuation">&#123;</span> test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.vue$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span> loader<span class="token operator">:</span> <span class="token string">'vue-loader'</span> <span class="token punctuation">&#125;</span>
+     <span class="token punctuation">]</span>
+     <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+     plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+     <span class="token comment">// ... 其它插件</span>
+     <span class="token keyword">new</span> <span class="token class-name">VueLoaderPlugin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 请确保引入这个插件！</span>
+     <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>运行 <strong>npm i vue –S</strong> 安装 vue</p>
 </li>
 <li><p>修改 index.js ，通过 <strong>import Vue from ‘vue’</strong> 来导入 vue 构造函数</p>
@@ -339,7 +434,20 @@
 <li><p>通过 <strong>import App from ‘./component/app.vue’</strong> 再导入App.vue 文件</p>
 </li>
 <li><p>创建 vue 的实例对象，并指定要控制的 el 区域，再通过 render 函数渲染 App 根组件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 导入 Vue 构造函数</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// 2. 导入 App 根组件</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./components/App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">     <span class="comment">// 3. 指定 vm 实例要控制的页面区域</span></span><br><span class="line">     <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">     <span class="comment">// 4. 通过 render 函数，把指定的组件渲染到 el 区域中</span></span><br><span class="line">     <span class="comment">// 5. render 函数 会把 el 指定的容器中的内容，全部清空覆盖！</span></span><br><span class="line">     <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params">createVue</span>)</span>&#123;</span><br><span class="line">         <span class="keyword">return</span> createVue(App);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 1. 导入 Vue 构造函数</span>
+<span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token comment">// 2. 导入 App 根组件</span>
+<span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">'./components/App.vue'</span>
+
+<span class="token keyword">const</span> vm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+     <span class="token comment">// 3. 指定 vm 实例要控制的页面区域</span>
+     el<span class="token operator">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+     <span class="token comment">// 4. 通过 render 函数，把指定的组件渲染到 el 区域中</span>
+     <span class="token comment">// 5. render 函数 会把 el 指定的容器中的内容，全部清空覆盖！</span>
+     <span class="token function-variable function">render</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">createVue</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+         <span class="token keyword">return</span> <span class="token function">createVue</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
 </li>
 </ul>
@@ -352,8 +460,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%8C%87%E5%8D%97/" rel="tag"># 指南</a>
               <a href="/tags/Webpack/" rel="tag"># Webpack</a>
+              <a href="/tags/%E6%8C%87%E5%8D%97/" rel="tag"># 指南</a>
           </div>
 
         
@@ -466,6 +574,9 @@
         <a href="https://github.com/BanShan-Alec" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BanShan-Alec" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
+        <a href="https://gitee.com/BanShan_Alec" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;BanShan_Alec" rel="noopener" target="_blank"><i class="fab fa-git-square fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
         <a href="mailto:wengzehua@88.com" title="E-Mail → mailto:wengzehua@88.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
@@ -496,6 +607,16 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">半山Alec</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">25k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">23 分钟</span>
 </div>
 
         
@@ -534,6 +655,10 @@
 
 
 
+  
+<script src="/js/local-search.js"></script>
+
+
 
 
 
@@ -549,5 +674,5 @@
 
   
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"react":{"opacity":1},"log":false});</script></body>
 </html>
