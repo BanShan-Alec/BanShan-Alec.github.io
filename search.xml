@@ -946,21 +946,18 @@ router<span class="token punctuation">.</span><span class="token function">go</s
     <title>VUE基础使用</title>
     <url>/2021/05/31/VUE%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h4 id="VUE基础语法"><a href="#VUE基础语法" class="headerlink" title="VUE基础语法"></a>VUE基础语法</h4><ol>
-<li><p>实例参数分析</p>
-<ul>
+<li>实例参数分析<ul>
 <li>el：被挂载的DOM元素位置（CSS选择器或DOM元素）</li>
 <li>data：模型数据（对象的形式）</li>
 </ul>
 </li>
-<li><p>插值表达式用法</p>
-<ul>
+<li>插值表达式用法<ul>
 <li>在数据填充到HTML标签中（存在“闪动”的问题）</li>
 <li>插值表达式支持基本的计算操作</li>
 <li>数据动态响应（数据改变影响DOM改变）</li>
 </ul>
 </li>
-<li><p>VUE代码运行原理</p>
-<ul>
+<li>VUE代码运行原理<ul>
 <li>渐进式框架，只关注视图层</li>
 <li>编译过程（VUE语法–&gt;原生JS）</li>
 <li>MVVM设计模式（数据驱动）  <img src="./mvvm.png" style="zoom:67%;" /></li>
@@ -998,14 +995,8 @@ router<span class="token punctuation">.</span><span class="token function">go</s
 </li>
 <li><p>v-cloak指令用法</p>
 <ul>
-<li><p>给元素添加自定义属性v-cloak（解决“闪动”问题）</p>
-</li>
-<li><p>原理：先隐藏，替换好值后再显示</p>
-<p>  css<br>  [v-cloak]{</p>
-<pre><code>  display: none;
-</code></pre>
-<p>  }</p>
-</li>
+<li>给元素添加自定义属性v-cloak（解决“闪动”问题）</li>
+<li>原理：先隐藏，替换好值后再显示</li>
 </ul>
 </li>
 <li><p>v-text 填充纯文本（相当于innerText）</p>
@@ -1020,19 +1011,17 @@ router<span class="token punctuation">.</span><span class="token function">go</s
 </ul>
 </li>
 <li><p>v-pre 填充原始信息</p>
-</li>
-</ol>
 <ul>
 <li>显示原始信息，跳过编译过程</li>
 </ul>
-<ol start="6">
-<li>v-once 只编译一次</li>
-</ol>
+</li>
+<li><p>v-once 只编译一次</p>
 <ul>
 <li>取消数据动态响应，提高性能</li>
 </ul>
-<ol start="7">
-<li>v-model=‘node’ 数据双向绑定<ul>
+</li>
+<li><p>v-model=‘node’ 数据双向绑定</p>
+<ul>
 <li>视图输入改变数据，数据改变影响视图</li>
 <li>实际包含两个操作v-bind数据绑定与v-on事件监听</li>
 </ul>
