@@ -1637,4 +1637,392 @@ router<span class="token punctuation">.</span><span class="token function">go</s
         <tag>Vue</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Linux指南</title>
+    <url>/2021/06/10/Linux%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h1 id="Linux指南"><a href="#Linux指南" class="headerlink" title="Linux指南"></a>Linux指南</h1><h3 id="1-关机重启、帮助与用户"><a href="#1-关机重启、帮助与用户" class="headerlink" title="1. 关机重启、帮助与用户"></a>1. 关机重启、帮助与用户</h3><ul>
+<li><p>关机</p>
+<blockquote>
+<p>shutdown -h now        立刻关机<br>shutdown -h 5        5分钟后关机<br>poweroff            立刻关机</p>
+</blockquote>
+</li>
+<li><p>重启</p>
+<blockquote>
+<p> shutdown -r now        立刻重启<br> shutdown -r 5        5分钟后重启<br> reboot                立刻重启‘</p>
+</blockquote>
+</li>
+<li><p>帮助命令</p>
+<ul>
+<li><p>–help命令</p>
+<blockquote>
+<p>shutdown –help<br>ifconfig  –help     查看网卡信息</p>
+</blockquote>
+</li>
+<li><p>man命令（命令说明书） </p>
+<blockquote>
+<p>man shutdown<br>注意：man shutdown 打开命令说明书之后，使用按键q退出</p>
+</blockquote>
+<span id="more"></span></li>
+</ul>
+</li>
+<li><p>用户管理</p>
+<ul>
+<li><p>查看用户</p>
+<ul>
+<li><p>who am i（相当于who -m）</p>
+<blockquote>
+<p>查看目前“登录用户”的用户名</p>
+</blockquote>
+</li>
+<li><p>whoami</p>
+<blockquote>
+<p>查看当前“操作用户”的用户名</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>创建用户</p>
+<blockquote>
+<p>sudo adduser user01</p>
+</blockquote>
+</li>
+<li><p>修改用户密码</p>
+<blockquote>
+<p>sudo passwd user01</p>
+</blockquote>
+</li>
+<li><p>切换用户</p>
+<blockquote>
+<p>su user01</p>
+</blockquote>
+</li>
+<li><p>切换用户且切换工作目录</p>
+<blockquote>
+<p>su - user01</p>
+</blockquote>
+</li>
+<li><p>切换当前用户的用户组</p>
+<blockquote>
+<p>newgrp root</p>
+</blockquote>
+</li>
+<li><p>退出用户/终端</p>
+<blockquote>
+<p>exit（相当于快捷键ctrl + d）</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-目录与文件"><a href="#2-目录与文件" class="headerlink" title="2. 目录与文件"></a>2. 目录与文件</h3><ul>
+<li><p>目录切换</p>
+<blockquote>
+<p>cd /     切换到根目录<br>cd /usr     切换到根目录下的usr目录<br>cd ../     切换到上一级目录 或者  cd ..<br>cd ~     切换到home目录<br>cd -     切换到上次访问的目录</p>
+</blockquote>
+</li>
+<li><p>目录查看</p>
+<blockquote>
+<p>ls                查看当前目录下的所有目录和文件<br>ls -a            查看当前目录下的所有目录和文件（包括隐藏的文件）<br>ls -l 或 ll     查看当前目录下的所有目录和文件（列表查看，显示更多信息）<br>ls /dir         查看指定目录下的所有目录和文件   如：ls /usr<br>ls -d            查看当前目录下的所有目录名</p>
+</blockquote>
+<p>![ls -l 解释](ls -l 解释.png)</p>
+</li>
+<li><p>文件查看</p>
+<ul>
+<li><p>cat/tac：看最后一屏</p>
+<blockquote>
+<p><strong>cat sudo.conf</strong>    使用cat查看/etc/sudo.conf文件，只能显示最后一屏内容</p>
+<p><strong>cat test1.txt &gt;&gt; test2.txt</strong>   将test1.txt 的内容追加到text2.txt的末尾</p>
+</blockquote>
+</li>
+<li><p>more：百分比显示</p>
+<blockquote>
+<p>示例：使用more查看/etc/sudo.conf文件，可以显示百分比，回车可以向下一行，空格可以向下一页，q可以退出查看</p>
+<p><strong>more sudo.conf</strong></p>
+</blockquote>
+</li>
+<li><p>less：翻页查看</p>
+<blockquote>
+<p>示例：使用less查看/etc/sudo.conf文件，可以使用键盘上的PgUp和PgDn向上    和向下翻页，q结束查看</p>
+<p><strong>less sudo.conf</strong></p>
+</blockquote>
+</li>
+<li><p>head/tail：指定行数或者动态查看</p>
+<blockquote>
+<p>示例：使用tail -10 查看/etc/sudo.conf文件的后10行，Ctrl+C结束  </p>
+<p><strong>tail -10 sudo.conf</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>创建目录</p>
+<blockquote>
+<p><strong>mkdir   aaa</strong>       在当前目录下创建一个名为aaa的目录<br><strong>mkdir   /usr/aaa</strong>   在指定目录下创建一个名为aaa的目录</p>
+</blockquote>
+</li>
+<li><p>创建文件</p>
+<blockquote>
+<p>命令：touch [文件名]<br>示例：<strong>touch  aa.txt</strong>   在当前目录创建一个名为aa.txt的文件</p>
+</blockquote>
+</li>
+<li><p>删除目录或文件</p>
+<ul>
+<li><p>删除文件：</p>
+<blockquote>
+<p>rm 文件       删除当前目录下的文件<br>rm -f 文件    删除当前目录的的文件（不询问）</p>
+</blockquote>
+</li>
+<li><p>删除目录：</p>
+<blockquote>
+<p>rm -r aaa    递归删除当前目录下的aaa目录<br>rm -rf aaa    递归删除当前目录下的aaa目录（不询问）</p>
+</blockquote>
+</li>
+<li><p>全部删除：</p>
+<blockquote>
+<p>rm -rf *    将当前目录下的所有目录和文件全部删除<br>rm -rf /*    【自杀命令！慎用！慎用！慎用！】将根目录下的所有文件全部删除</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>修改目录</p>
+<ul>
+<li><p>重命名目录</p>
+<blockquote>
+<p>命令：mv [当前目录]  [新目录]<br>例如：<strong>mv aaa bbb</strong>    将目录aaa改为bbb<br>注意：mv的语法不仅可以对目录进行重命名而且也可以对各种文件，压缩包等进行重命名的操作</p>
+</blockquote>
+</li>
+<li><p>剪切目录</p>
+<blockquote>
+<p>命令：mv [目录名称] [目录的新位置]<br>示例：<strong>mv /usr/tmp/aaa   /usr</strong>   将/usr/tmp目录下的aaa目录剪切到 /usr目录下面<br>注意：mv语法不仅可以对目录进行剪切操作，对文件和压缩包等都可执行剪切操作</p>
+</blockquote>
+</li>
+<li><p>拷贝目录</p>
+<blockquote>
+<p>命令：cp -r [目录名称] [目录拷贝的目标位置]  （-r代表递归 ）<br>示例：<strong>cp -r /usr/tmp/aaa   /usr</strong>   将/usr/tmp目录下的aaa目录复制到 /usr目录下面<br>注意：cp命令不仅可以拷贝目录还可以拷贝文件，压缩包等，拷贝文件和压缩包时不用写-r递归</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>修改文件</p>
+<blockquote>
+<p>s使用vi/vim编辑器，详细使用查看vim编辑指南</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="4-文件内容处理与链接"><a href="#4-文件内容处理与链接" class="headerlink" title="4. 文件内容处理与链接"></a>4. 文件内容处理与链接</h3><ul>
+<li><p>修改文件权限</p>
+<ul>
+<li><p>二进制数字表示</p>
+<blockquote>
+<p><strong>读、写、执行</strong>：4、2、1</p>
+<p>权限顺序：<strong>拥有者，所属用户组，其他用户</strong></p>
+<p>示例：sudo chmod 600 text1       text1文件只能拥有者“读、写”</p>
+</blockquote>
+</li>
+<li><p>加减赋值表示</p>
+<blockquote>
+<p>sudo chmod go-rw  text1    与上面的命令效果相同</p>
+</blockquote>
+</li>
+<li><p>修改文件拥有者</p>
+<blockquote>
+<p>sudo chmod shiyanlou text1     修改text1的拥有者为shiyanlou</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>对文件内容进行剪切</p>
+<blockquote>
+<p>cut 打印每一行的某一字段</p>
+<p>cut /etc/passwd -c -5    每行前五个字母（包含第五个）</p>
+<p>cut /etc/passwd -c 5-    每行前五个之后的（包含第五个）</p>
+<p>cut /etc/passwd -c 5     每行的第五个</p>
+<p>cut /etc/passwd -c 2-5  每行2到5之间的（包含第五个）</p>
+</blockquote>
+</li>
+<li><p>对文件内容里符合条件的行进行匹配</p>
+<blockquote>
+<p>命令： grep [命令参数] [用于匹配的表达式]  [文件名/目录]</p>
+<p>参数： -v 反向查找；-i 忽略大小写；-n 显示行号；-w 被匹配的文本只能是单词</p>
+<p>示例： grep “ccc” test02  显示包含ccc的行</p>
+</blockquote>
+</li>
+<li><p>对文件内容进行统计</p>
+<blockquote>
+<p>wc /etc/passd 默认输出：行数、单词数、字节数</p>
+<p>wc -l /etc/passwd  行数</p>
+<p>wc -w /etc/passwd 单词数</p>
+<p>wc -c /etc/passwd 字节数</p>
+<p>wc -m /etc/passwd 字符数</p>
+</blockquote>
+</li>
+<li><p>对文件内容去重与排序</p>
+<blockquote>
+<p>sort test2 | uniq | &gt; test2 | cat   对test2内容先排序后去重，再写入test2后输出</p>
+</blockquote>
+</li>
+<li><p>建立连接文件</p>
+<ul>
+<li><p><strong>硬连接 ln source.log link1.log</strong></p>
+<ol>
+<li>硬链接，以文件副本的形式存在。但不占用实际空间。</li>
+<li>不允许给目录创建硬链接</li>
+<li>硬链接只有在同一个文件系统中才能创建</li>
+</ol>
+</li>
+<li><p><strong>软连接 ln -s source.log link.log</strong>        </p>
+<ol>
+<li>软链接，以路径的形式存在；类似于Windows操作系统中的快捷方式</li>
+<li>软链接可以跨文件系统，硬链接不可以</li>
+<li>软链接可以对一个不存在的文件名进行链接</li>
+<li>软链接可以对目录进行链接</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-文件查找命令"><a href="#5-文件查找命令" class="headerlink" title="5. 文件查找命令"></a>5. 文件查找命令</h3><ul>
+<li><p>find</p>
+<ul>
+<li><p>find命令在目录结构中搜索文件，并对搜索结果执行指定的操作。</p>
+</li>
+<li><p>find <strong>默认搜索当前目录及其子目录</strong>（即递归），并且不过滤任何结果（也就是返回所有文件与目录），将它们全都显示在屏幕上</p>
+</li>
+<li><p>使用实例：</p>
+<blockquote>
+<p>find .   -name “*.log” -ls     在当前目录查找以.log结尾的文件，并显示详细信息。<br>find /root/   -perm 600       查找/root/目录下权限为600的文件<br>find .   -type f -name “*.log”     查找当目录，以.log结尾的普通文件<br>find .   -type d | sort       查找当前所有目录并排序<br>find .   -size +100M         查找当前目录大于100M的文件</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>locate</p>
+<ul>
+<li><p>locate 通过“ /var/lib/mlocate/mlocate.db ”数据库查找， 让使用者可以很快速的搜寻某个路径。不过这个数据库也不是实时更新的，默认每天自动更新一次，所以使用locate 命令查不到最新变动过的文件。<strong>为了避免这种情况，可以在使用locate之前，先使用updatedb命令，手动更新数据库。</strong></p>
+</li>
+<li><p>使用实例：</p>
+<blockquote>
+<p>updatedb<br>locate /etc/sh 搜索etc目录下所有以sh开头的文件<br>locate pwd 查找和pwd相关的所有文件</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>whereis</p>
+<ul>
+<li><p>whereis 命令是定位可执行文件、源代码文件、帮助文件在文件系统中的位置。<strong>whereis</strong> 只能搜索二进制文件(-b)，man 帮助文件(-m)和源代码文件(-s)</p>
+</li>
+<li><p>使用实例：</p>
+<blockquote>
+<p>whereis ls    将和ls文件相关的文件都查找出来</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>which</p>
+<ul>
+<li><p>which命令的作用是在<strong>PATH变量</strong>指定的路径中，搜索某个系统命令的位置，并且返回第一个搜索结果。</p>
+</li>
+<li><p>使用实例：</p>
+<blockquote>
+<p>which pwd  查找pwd命令所在路径<br>which java  查找path中java的路径</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-磁盘管理"><a href="#6-磁盘管理" class="headerlink" title="6. 磁盘管理"></a>6. 磁盘管理</h3><ul>
+<li><p>查看磁盘容量 </p>
+<ul>
+<li><p>df (disk free)</p>
+</li>
+<li><p>du (disk usage)</p>
+<blockquote>
+<p>Filesystem：文件系统<br>Size： 分区大小<br>Used： 已使用容量<br>Avail： 还可以使用的容量<br>Use%： 已用百分比<br>Mounted on： 挂载点</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-备份压缩"><a href="#7-备份压缩" class="headerlink" title="7. 备份压缩"></a>7. 备份压缩</h3><ul>
+<li><p>打包和压缩<br>Windows的压缩文件的扩展名  .zip/.rar<br>linux中的打包文件：aa.tar<br>linux中的压缩文件：bb.gz<br>linux中打包并压缩的文件：.tar.gz</p>
+<p>Linux中的打包文件一般是以.tar结尾的，压缩的命令一般是以.gz结尾的。<br>而一般情况下打包和压缩是一起进行的，打包并压缩后的文件的后缀名一般.tar.gz。</p>
+<blockquote>
+<p>命令：tar [-zcvf] [打包压缩后的文件名] [要打包的文件]<br>参数：-z：调用gzip压缩命令进行压缩<br>-c：打包文件<br>-v：显示运行过程<br>-f：指定文件名<br>-z：通过gzip压缩（后缀.gz）</p>
+<p>示例：tar -zcf all.tar.gz  *    打包并压缩当前目录下的所有文件，打包压缩后的文件名为all.tar.gz</p>
+</blockquote>
+</li>
+<li><p>解压</p>
+<blockquote>
+<p>命令：tar [-zxvf] [要解压的文件] (-C) (要压缩到的目录)<br>参数：-x：代表解压；-C：change修改解压路径<br>示例：tar -x test.rar -C /home/shiyanlou  解压test.rar到路径/home/shiyanlou下</p>
+</blockquote>
+</li>
+<li><p>zip：</p>
+<blockquote>
+<p>压缩：zip (-r) [打包压缩后的文件名] [要打包的文件]（要压缩到的目录）</p>
+<p>解压：unzip -(d) [要解压的文件]  (要解压到的目录)</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="8-其他命令"><a href="#8-其他命令" class="headerlink" title="8. 其他命令"></a>8. 其他命令</h3><ul>
+<li>清除屏幕 clear（或快捷键ctrl + L）</li>
+<li>显示文本 echo</li>
+<li>显示日期和时间 date</li>
+<li>查看所有正在运行的进程 ps -ef</li>
+<li>终止某一进程 kill -9 pid（强制杀死进程）</li>
+<li>显示最近执行过的10条指令 history 10</li>
+<li>定义别名 alias l = ‘ls’ （解除 unalias l ）</li>
+<li>top：显示当前系统正在执行的进程的相关信息，包括进程 ID、内存占用率、CPU 占用率等</li>
+<li>free：显示系统内存使用情况，包括物理内存、交互区内存(swap)和内核缓冲区内存</li>
+</ul>
+<h3 id="9-vim编辑器的使用"><a href="#9-vim编辑器的使用" class="headerlink" title="9. vim编辑器的使用"></a>9. vim编辑器的使用</h3><p>vi编辑器有3种模式，分别是命令模式（command mode）、插入模式（Insert mode）和底行模式（last line mode），各模式的功能区分如下：</p>
+<ul>
+<li><p>命令行模式（command mode）</p>
+<blockquote>
+<p>控制屏幕光标的移动，字符、字或行的删除，查找，移动复制某区段及进入Insert mode下，或者到 last line mode</p>
+<p>命令行模式下的常用命令：<br>   【1】控制光标移动：↑，↓，j<br>   【2】删除当前行：dd<br>   【3】查找：/字符<br>   【4】进入编辑模式：i o a<br>   【5】进入底行模式：:</p>
+</blockquote>
+</li>
+<li><p>编辑模式（Insert mode）</p>
+<blockquote>
+<p>只有在Insert mode下，才可以做文字输入，按「ESC」键可回到命令行模式</p>
+<p>在命令模式中按下【i，I，o，O，a，A】各个按键含义如下：<br>​      a：在光标后开始插入<br>​      A：在行尾开始插入<br>​      i：从光标所在位置前面开始插入<br>​      I：从光标所在列的第一个非空白字元面前开始插入<br>​      o：在光标所在列下新增一列并进入输入模式<br>​      O：在光标所在列上方新增一列并进入输入模式</p>
+</blockquote>
+</li>
+<li><p>底行模式（last line mode）</p>
+<blockquote>
+<p>将文件保存或退出vi，也可以设置编辑环境，如寻找字符串、列出行号……等<br>按「ESC」键可回到命令行模式</p>
+<p>底行模式下常用命令：<br>【1】退出编辑：   :q<br>【2】强制退出：   :q!<br>【3】保存并退出：  :wq</p>
+</blockquote>
+</li>
+<li><p>打开文件</p>
+<blockquote>
+<p>命令：vi 文件名</p>
+<p>示例：打开当前目录下的aa.txt文件     vi aa.txt 或者 vim aa.txt</p>
+<p>注意：使用vi编辑器打开文件后，并不能编辑，因为此时处于命令模式，点击键盘i/a/o进入编辑模式</p>
+</blockquote>
+</li>
+<li><p>编辑文件</p>
+<blockquote>
+<p>使用vi编辑器打开文件后在命令模式中按下【i，I，o，O，a，A】等字母之后进入编辑模式</p>
+<p>按下上述的字母时，画面的左下方可能会出现【–INSERT–或–插入–】的字样，可以做文字数据输入。</p>
+</blockquote>
+</li>
+<li><p>保存文件</p>
+<blockquote>
+<p>第一步：<strong>ESC</strong>  进入命令行模式<br>第二步：**:**     进入底行模式<br>第三步：<strong>wq</strong>     保存并退出编辑</p>
+</blockquote>
+</li>
+<li><p>取消编辑</p>
+<blockquote>
+<p>第一步：ESC  进入命令行模式<br>第二步：:     进入底行模式<br>第三步：q!     撤销本次修改并退出编辑</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>基础</category>
+      </categories>
+      <tags>
+        <tag>指南</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
 </search>
