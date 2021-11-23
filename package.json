@@ -1,0 +1,26 @@
+{
+  "name": "BanShan-Alec.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BanShan-Alec/BanShan-Alec.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BanShan-Alec/BanShan-Alec.github.io/issues"
+  },
+  "homepage": "https://github.com/BanShan-Alec/BanShan-Alec.github.io#readme",
+  "dependencies": {
+    "vuepress": "^1.8.2",
+    "vuepress-theme-melodydl": "^1.1.2"
+  }
+}
